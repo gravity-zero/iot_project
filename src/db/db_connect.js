@@ -8,3 +8,4 @@ const bucket = 'gravity.neo\'s Bucket'
 
 const client = new InfluxDB({url: 'https://eu-central-1-1.aws.cloud2.influxdata.com', token: token})
 
+module.exports = client;
