@@ -4,7 +4,7 @@ const express = require('express');
 require('dotenv').config()
 
 // Constants
-const PORT = 8080;
+const PORT = 9090;
 const HOST = process.env.HOST
 
 // App
