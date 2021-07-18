@@ -2,10 +2,12 @@
 
 const express = require('express');
 require('dotenv').config()
+const os = require('os');
+const config = require('config');
 
 // Constants
-const PORT = 9090;
-const HOST = process.env.HOST
+const HOST = os.hostname();
+const PORT = config.get('PORT');
 
 // App
 const app = express();
