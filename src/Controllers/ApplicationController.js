@@ -1,42 +1,24 @@
-const InfluxDB = require('@influxdata/influxdb-client')
-const client = new InfluxDB('http://127.0.0.1:8086/mydb');
-const Application = require('../models/ApplicationModel');
-
-exports.modifyApplication = (req, res, next) => {
-    Application.findOne({ _id: req.params.id })
-        .then(application => {
-            const applicationObject = req.body.application;
-            Application.updateOne({ _id: req.params.id }, { 
-               // ici les champs à update
-            })
-                .then((application) => res.status(200).json({message : 'Application modifié', application: application}))
-                .catch(error => res.status(400).json({ error }));
-        })
-        .catch(error => res.status(500).json({ error }));
-};
-
-exports.deleteApplication = (req, res, next) => {
-    Application.findOne({ _id: req.params.id })
-        .then(application => {
-            if (application !== null) {
-                Application.deleteOne({ _id: req.params.id })
-                    .then(() => res.status(200).json({message : 'Application supprimé'}))
-                    .catch(error => res.status(400).json({ error }));
-            } else {
-                return res.status(404).json({ message: 'Application non trouvé' })
-            }
-        })
-        .catch(error => res.status(500).json({ message: 'application not found :' + error }));
-};
-
-exports.getOneApplication = (req, res, next) => {
-    Application.findOne({ _id: req.params.id })
-        .then(application => res.status(200).json(application))
-        .catch(error => res.status(404).json({ message: 'application not found :' + error }));
-};
+const Influxdb = require('influxdb-v2');
 
 exports.getAllApplications = (req, res, next) => {
-    Application.find()
-        .then(applications => res.status(200).json(applications))
-        .catch(error => res.status(400).json({ error }));
+    (async () => {
+        const query = 'from(bucket: "mqtt_consumer")|> range(start: -5m)|> filter(fn: (r) => r["_measurement"] == "GH6")|> filter(fn: (r) => r["_field"] == "data_value")'
+        const influxdb = new Influxdb({
+          host: 'eu-central-1-1.aws.cloud2.influxdata.com',
+          token: 'zl8vyvkEf8pmCvkGbNtZWaYbxrG9nwljXvC_A1be4U7xgAbgVRk6I746okasoyx0NtdaBfQjooQt5uN0fvRJZg==',
+          port: 443,
+        });
+      
+        const result = await influxdb.query(
+          { org: 'e65d4be7f29550bf' },
+          { query: query
+            }
+        );
+       res.status(200).json(result)
+      
+      })().catch(error => {
+        console.error('\n🐞 An error occurred!', error);
+        process.exit(1);
+      });
 };
+
