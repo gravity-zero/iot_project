@@ -37,9 +37,9 @@ app.get('/getFieldByTime/:time', (req, res) => {
   });
 });
 
-app.get('/getFieldByTimeAndTopic/:time/:topic', (req, res) => {
+app.get('/getFieldByTimeAndTopic/:time/:sensor', (req, res) => {
   (async () => {
-    const query = 'from(bucket: "mqtt_consumer")|> range(start: -' + req.params.time + 'm)|> filter(fn: (r) => r["_measurement"] == "GH6")|> filter(fn: (r) => r["_field"] == "data_value") |> filter(fn: (r) => r["topic"] == "WEB2-GROUPE16/6465/'+ req.params.topic +'")'
+    const query = 'from(bucket: "mqtt_consumer")|> range(start: -' + req.params.time + 'm)|> filter(fn: (r) => r["_measurement"] == "GH6")|> filter(fn: (r) => r["_field"] == "data_value") |> filter(fn: (r) => r["sensor_id"] == "'+ req.params.sensor +'")'
     const influxdb = new Influxdb({
       host: 'eu-central-1-1.aws.cloud2.influxdata.com',
       token: 'zl8vyvkEf8pmCvkGbNtZWaYbxrG9nwljXvC_A1be4U7xgAbgVRk6I746okasoyx0NtdaBfQjooQt5uN0fvRJZg==',
