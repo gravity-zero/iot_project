@@ -3,11 +3,10 @@
 const express = require('express');
 require('dotenv').config()
 const os = require('os');
-const config = require('config');
 
 // Constants
-const HOST = os.hostname();
-const PORT = config.get('PORT');
+const HOST = 'localhost';
+const PORT = 8081;
 
 // App
 const app = express();
