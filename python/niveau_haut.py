@@ -29,7 +29,7 @@ def run(cond):
         for node in NODE_ID:
             MQTT_TOPIC = GROUPNAME + "/" + node + "/" + str(SENSOR_ID)
             MQTT_MSG = json.dumps({"source_address": node, "sensor_id": SENSOR_ID, "tx_time_ms_epoch": int(time.time()),
-                               "data": {"value": value}, "alert": 1})
+                               "data": {"value": value}, "alert": 0})
             client.publish(MQTT_TOPIC, MQTT_MSG)
             print("MQTT Mis à jour - Node %s Timestamp : %s"%(node,int(time.time())))
         client.disconnect()    
