@@ -64,6 +64,7 @@ app.get('/getFieldByTimeAndTopic/:time/:sensor', (req, res) => {
     const influxdb = new Influxdb({
       host: process.env.INFLUX_HOST,
       token: process.env.INFLUX_TOKEN,
+<<<<<<< HEAD
       port: 443,
     });
   
@@ -85,6 +86,8 @@ app.get('/getFieldByRangeAndTopic/:date1/:date2/:sensor', (req, res) => {
     const influxdb = new Influxdb({
       host: process.env.INFLUX_HOST,
       token: process.env.INFLUX_TOKEN,
+=======
+>>>>>>> faa67b9552a134828b5c5fb0ca816eb7abfc052f
       port: 443,
     });
   
