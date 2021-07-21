@@ -41,13 +41,13 @@ app.get('/getFieldByTimeAndTopic/:time/:sensor', (req, res) => {
   (async () => {
     const query = 'from(bucket: "mqtt_consumer")|> range(start: -' + req.params.time + 'm)|> filter(fn: (r) => r["_field"] == "data_value") |> filter(fn: (r) => r["_measurement"] == "'+ req.params.sensor +'")'
     const influxdb = new Influxdb({
-      host: 'eu-central-1-1.aws.cloud2.influxdata.com',
-      token: 'zl8vyvkEf8pmCvkGbNtZWaYbxrG9nwljXvC_A1be4U7xgAbgVRk6I746okasoyx0NtdaBfQjooQt5uN0fvRJZg==',
+      host: process.env.INFLUX_HOST,
+      token: process.env.INFLUEX_TOKEN,
       port: 443,
     });
   
     const result = await influxdb.query(
-      { org: 'e65d4be7f29550bf' },
+      { org: process.env.INFLUX_ORG },
       { query: query }
     );
    res.status(200).json(result)
