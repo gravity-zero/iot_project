@@ -10,7 +10,4 @@ app.use((req, res, next) => {
 });
 app.use(bodyParser.json());
 
-const applicationRoute = require('./src/routes/ApplicationRoute');
-app.use('/api/applications', applicationRoute);
-
 module.exports = app;
