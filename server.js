@@ -7,8 +7,8 @@ const app = express();
 require('./src/routes')(app);
 
 // Constants
-const HOST = "localhost"
-const PORT = 8080;
+const HOST = process.env.HOST
+const PORT = process.env.PORT;
 
 app.listen(PORT, HOST);
 console.log(`Running on http://${HOST}:${PORT}`);
