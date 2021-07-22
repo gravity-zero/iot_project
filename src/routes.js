@@ -8,6 +8,8 @@ module.exports = function(app){
         port: 443,
       });
 
+      const org = process.env.INFLUX_ORG;
+
     app.get('/', (req, res) => {
       res.send('WEB SERVICE LAUNCH');
     });
@@ -17,7 +19,7 @@ module.exports = function(app){
         const query = 'from(bucket: "mqtt_consumer")|> range(start: -' + req.params.time + 'm)|> filter(fn: (r) => r["_field"] == "data_value")'
         
         const result = await influxdb.query(
-            { org: process.env.INFLUX_ORG },
+            { org: org },
             { query: query }
         );
         res.status(200).json(result)
@@ -33,7 +35,7 @@ module.exports = function(app){
         const query = 'from(bucket: "mqtt_consumer")|> range(start: ' + req.params.date1 + ', stop:'+ req.params.date2 +')|> filter(fn: (r) => r["_field"] == "data_value")'
 
         const result = await influxdb.query(
-            { org: process.env.INFLUX_ORG },
+            { org: org },
             { query: query }
         );
         res.status(200).json(result)
@@ -49,7 +51,7 @@ module.exports = function(app){
         const query = 'from(bucket: "mqtt_consumer")|> range(start: -' + req.params.time + 'm)|> filter(fn: (r) => r["_field"] == "data_value") |> filter(fn: (r) => r["_measurement"] == "'+ req.params.sensor +'")'
         
         const result = await influxdb.query(
-            { org: process.env.INFLUX_ORG },
+            { org: org },
             { query: query }
         );
         res.status(200).json(result)
@@ -65,7 +67,7 @@ module.exports = function(app){
         const query = 'from(bucket: "mqtt_consumer")|> range(start: ' + req.params.date1 + ', stop:'+ req.params.date2 +')|> filter(fn: (r) => r["_field"] == "data_value") |> filter(fn: (r) => r["_measurement"] == "'+ req.params.sensor +'")'
 
         const result = await influxdb.query(
-            { org: process.env.INFLUX_ORG },
+            { org: org },
             { query: query }
         );
         res.status(200).json(result)
@@ -81,7 +83,7 @@ module.exports = function(app){
           const query = 'from(bucket: "mqtt_consumer")|> range(start: -' + req.params.time + 'm)|> filter(fn: (r) => r["_field"] == "alert") |> filter(fn: (r) => r["_measurement"] == "'+ req.params.sensor +'")'
         
           const result = await influxdb.query(
-            { org: process.env.INFLUX_ORG },
+            { org: org },
             { query: query }
           );
          res.status(200).json(result)
@@ -97,7 +99,7 @@ module.exports = function(app){
             const query = 'from(bucket: "mqtt_consumer")|> range(start: -' + req.params.time + 'm)|> filter(fn: (r) => r["_field"] == "data_value") |> mean()'
         
             const result = await influxdb.query(
-            { org: process.env.INFLUX_ORG },
+            { org: org },
             { query: query }
             );
             res.status(200).json(result)
@@ -113,7 +115,7 @@ module.exports = function(app){
             const query = 'from(bucket: "mqtt_consumer")|> range(start: ' + req.params.date1 + ', stop:'+ req.params.date2 +')|> filter(fn: (r) => r["_field"] == "data_value") |> filter(fn: (r) => r["_measurement"] == "'+ req.params.sensor +'") |> mean()'
 
             const result = await influxdb.query(
-            { org: process.env.INFLUX_ORG },
+            { org: org },
             { query: query }
             );
             res.status(200).json(result)
@@ -129,7 +131,7 @@ module.exports = function(app){
             const query = 'from(bucket: "mqtt_consumer")|> range(start: -' + req.params.time + 'm)|> filter(fn: (r) => r["_field"] == "data_value") |> filter(fn: (r) => r["_measurement"] == "Sulfate" or r["_measurement"] == "Sodium" or r["_measurement"] == "Chlorure" or r["_measurement"] == "Potassium") |> mean()'
 
             const result = await influxdb.query(
-            { org: process.env.INFLUX_ORG },
+            { org: org },
             { query: query }
             );
             res.status(200).json(result)
@@ -145,7 +147,7 @@ module.exports = function(app){
         const query = 'from(bucket: "mqtt_consumer")|> range(start: -' + req.params.time + 'm)|> filter(fn: (r) => r["_field"] == "data_value") |> filter(fn: (r) => r["_measurement"] == "Debimetre")'
         
         const result = await influxdb.query(
-            { org: process.env.INFLUX_ORG },
+            { org: org },
             { query: query }
         );
 
