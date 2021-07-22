@@ -177,6 +177,91 @@ module.exports = function(app){
         });
     });
 
+    app.get('/getSodium/:time', (req, res) => {
+        (async () => {
+            const query = 'from(bucket: "mqtt_consumer")|> range(start: -' + req.params.time + 'd)|> filter(fn: (r) => r["_field"] == "data_value") |> filter(fn: (r) => r["_measurement"] == "Sodium") |> limit(n:30)'
+
+            const result = await influxdb.query(
+            { org: org },
+            { query: query }
+            );
+
+            res.status(200).json(result)
+        
+        })().catch(error => {
+            console.error('\n🐞 An error occurred!', error);
+            process.exit(1);
+        });
+    });
+
+    app.get('/getNitrate/:time', (req, res) => {
+        (async () => {
+            const query = 'from(bucket: "mqtt_consumer")|> range(start: -' + req.params.time + 'd)|> filter(fn: (r) => r["_field"] == "data_value") |> filter(fn: (r) => r["_measurement"] == "Nitrate") |> limit(n:30)'
+
+            const result = await influxdb.query(
+            { org: org },
+            { query: query }
+            );
+
+            res.status(200).json(result)
+        
+        })().catch(error => {
+            console.error('\n🐞 An error occurred!', error);
+            process.exit(1);
+        });
+    });
+
+    app.get('/getChlorure/:time', (req, res) => {
+        (async () => {
+            const query = 'from(bucket: "mqtt_consumer")|> range(start: -' + req.params.time + 'd)|> filter(fn: (r) => r["_field"] == "data_value") |> filter(fn: (r) => r["_measurement"] == "Chlorure") |> limit(n:30)'
+
+            const result = await influxdb.query(
+            { org: org },
+            { query: query }
+            );
+
+            res.status(200).json(result)
+        
+        })().catch(error => {
+            console.error('\n🐞 An error occurred!', error);
+            process.exit(1);
+        });
+    });
+
+    app.get('/getPotassium/:time', (req, res) => {
+        (async () => {
+            const query = 'from(bucket: "mqtt_consumer")|> range(start: -' + req.params.time + 'd)|> filter(fn: (r) => r["_field"] == "data_value") |> filter(fn: (r) => r["_measurement"] == "Potassium") |> limit(n:30)'
+
+            const result = await influxdb.query(
+            { org: org },
+            { query: query }
+            );
+
+            res.status(200).json(result)
+        
+        })().catch(error => {
+            console.error('\n🐞 An error occurred!', error);
+            process.exit(1);
+        });
+    });
+
+    app.get('/getSulfate/:time', (req, res) => {
+        (async () => {
+            const query = 'from(bucket: "mqtt_consumer")|> range(start: -' + req.params.time + 'd)|> filter(fn: (r) => r["_field"] == "data_value") |> filter(fn: (r) => r["_measurement"] == "Sulfate") |> limit(n:30)'
+
+            const result = await influxdb.query(
+            { org: org },
+            { query: query }
+            );
+
+            res.status(200).json(result)
+        
+        })().catch(error => {
+            console.error('\n🐞 An error occurred!', error);
+            process.exit(1);
+        });
+    });
+
     app.get('/getConsumption/:time', (req, res) => {
         (async () => {
         const query = 'from(bucket: "mqtt_consumer")|> range(start: -' + req.params.time + 'm)|> filter(fn: (r) => r["_field"] == "data_value") |> filter(fn: (r) => r["_measurement"] == "Debimetre")'
