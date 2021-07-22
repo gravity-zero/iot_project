@@ -96,7 +96,7 @@ module.exports = function(app){
 
     app.get('/getAverage/:time/:sensor', (req, res) => {
         (async () => {
-            const query = 'from(bucket: "mqtt_consumer")|> range(start: -' + req.params.time + 'm)|> filter(fn: (r) => r["_field"] == "data_value") |> mean()'
+            const query = 'from(bucket: "mqtt_consumer")|> range(start: -' + req.params.time + 'm)|> filter(fn: (r) => r["_field"] == "data_value") |> filter(fn: (r) => r["_measurement"] == "'+ req.params.sensor +'") |> mean()'
         
             const result = await influxdb.query(
             { org: org },
