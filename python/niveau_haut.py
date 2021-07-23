@@ -11,8 +11,8 @@ MQTT_PASSWORD="60850033"
 NODE_ID=["6465"]
 SENSOR_ID="132" #Sonde de Niveau
 
-VAL_MIN = 45
-VAL_MAX = 100
+VAL_MIN = 160000
+VAL_MAX = 300000
 
 def randomize():
   return round(random.uniform(VAL_MIN, VAL_MAX), 2)
