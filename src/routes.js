@@ -48,7 +48,7 @@ module.exports = function(app){
     
     app.get('/getFieldByTimeAndTopic/:time/:sensor', (req, res) => {
         (async () => {
-        const query = 'from(bucket: "mqtt_consumer") |> range(start: -' + req.params.time + 'm) |> filter(fn: (r) => r["_field"] == "data_value") |> filter(fn: (r) => r["_measurement"] == "'+ req.params.sensor +'") |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)'
+        const query = 'from(bucket: "mqtt_consumer") |> range(start: -' + req.params.time + 'm) |> filter(fn: (r) => r["_field"] == "data_value") |> filter(fn: (r) => r["_measurement"] == "'+ req.params.sensor +'") |> aggregateWindow(every: ' + req.params.time + 'm, fn: mean, createEmpty: false)'
         
         const result = await influxdb.query(
             { org: org },
