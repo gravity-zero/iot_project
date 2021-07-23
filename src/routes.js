@@ -16,7 +16,7 @@ module.exports = function(app){
     
     app.get('/getFieldByTime/:time', (req, res) => {
         (async () => {
-        const query = 'from(bucket: "mqtt_consumer")|> range(start: -' + req.params.time + 'm)|> filter(fn: (r) => r["_field"] == "data_value")'
+        const query = 'from(bucket: "mqtt_consumer")|> range(start: -' + req.params.time + 'm)|> filter(fn: (r) => r["_field"] == "data_value") |> aggregateWindow(every: ' + req.params.time + 'm, fn: mean) |> aggregateWindow(every: ' + req.params.time + 'm, fn: mean)'
         
         const result = await influxdb.query(
             { org: org },
@@ -32,7 +32,7 @@ module.exports = function(app){
     
     app.get('/getFieldByRange/:date1/:date2', (req, res) => {
         (async () => {
-        const query = 'from(bucket: "mqtt_consumer")|> range(start: ' + req.params.date1 + ', stop:'+ req.params.date2 +')|> filter(fn: (r) => r["_field"] == "data_value")'
+        const query = 'from(bucket: "mqtt_consumer")|> range(start: ' + req.params.date1 + ', stop:'+ req.params.date2 +')|> filter(fn: (r) => r["_field"] == "data_value") |> aggregateWindow(every: ' + req.params.time + 'm, fn: mean)'
 
         const result = await influxdb.query(
             { org: org },
@@ -48,7 +48,7 @@ module.exports = function(app){
     
     app.get('/getFieldByTimeAndTopic/:time/:sensor', (req, res) => {
         (async () => {
-        const query = 'from(bucket: "mqtt_consumer")|> range(start: -' + req.params.time + 'm)|> filter(fn: (r) => r["_field"] == "data_value") |> filter(fn: (r) => r["_measurement"] == "'+ req.params.sensor +'")'
+        const query = 'from(bucket: "mqtt_consumer")|> range(start: -' + req.params.time + 'm)|> filter(fn: (r) => r["_field"] == "data_value") |> filter(fn: (r) => r["_measurement"] == "'+ req.params.sensor +'") |> aggregateWindow(every: ' + req.params.time + 'm, fn: mean)'
         
         const result = await influxdb.query(
             { org: org },
@@ -64,7 +64,7 @@ module.exports = function(app){
     
     app.get('/getFieldByRangeAndTopic/:date1/:date2/:sensor', (req, res) => {
         (async () => {
-        const query = 'from(bucket: "mqtt_consumer")|> range(start: ' + req.params.date1 + ', stop:'+ req.params.date2 +')|> filter(fn: (r) => r["_field"] == "data_value") |> filter(fn: (r) => r["_measurement"] == "'+ req.params.sensor +'")'
+        const query = 'from(bucket: "mqtt_consumer")|> range(start: ' + req.params.date1 + ', stop:'+ req.params.date2 +')|> filter(fn: (r) => r["_field"] == "data_value") |> filter(fn: (r) => r["_measurement"] == "'+ req.params.sensor +'") |> aggregateWindow(every: ' + req.params.time + 'm, fn: mean)'
 
         const result = await influxdb.query(
             { org: org },
@@ -80,7 +80,7 @@ module.exports = function(app){
 
     app.get('/getAlertByTimeAndTopic/:time/:sensor', (req, res) => {
         (async () => {
-          const query = 'from(bucket: "mqtt_consumer")|> range(start: -' + req.params.time + 'm)|> filter(fn: (r) => r["_field"] == "alert") |> filter(fn: (r) => r["_measurement"] == "'+ req.params.sensor +'")'
+          const query = 'from(bucket: "mqtt_consumer")|> range(start: -' + req.params.time + 'm)|> filter(fn: (r) => r["_field"] == "alert") |> filter(fn: (r) => r["_measurement"] == "'+ req.params.sensor +'") |> aggregateWindow(every: ' + req.params.time + 'm, fn: mean)'
         
           const result = await influxdb.query(
             { org: org },
@@ -96,7 +96,7 @@ module.exports = function(app){
 
     app.get('/getAverage/:time/:sensor', (req, res) => {
         (async () => {
-            const query = 'from(bucket: "mqtt_consumer")|> range(start: -' + req.params.time + 'm)|> filter(fn: (r) => r["_field"] == "data_value") |> filter(fn: (r) => r["_measurement"] == "'+ req.params.sensor +'") |> mean()'
+            const query = 'from(bucket: "mqtt_consumer")|> range(start: -' + req.params.time + 'm)|> filter(fn: (r) => r["_field"] == "data_value") |> filter(fn: (r) => r["_measurement"] == "'+ req.params.sensor +'") |> mean() |> aggregateWindow(every: ' + req.params.time + 'm, fn: mean)'
         
             const result = await influxdb.query(
             { org: org },
@@ -264,7 +264,7 @@ module.exports = function(app){
 
     app.get('/getConsumption/:time', (req, res) => {
         (async () => {
-        const query = 'from(bucket: "mqtt_consumer")|> range(start: -' + req.params.time + 'm)|> filter(fn: (r) => r["_field"] == "data_value") |> filter(fn: (r) => r["_measurement"] == "Debimetre")'
+        const query = 'from(bucket: "mqtt_consumer")|> range(start: -' + req.params.time + 'm)|> filter(fn: (r) => r["_field"] == "data_value") |> filter(fn: (r) => r["_measurement"] == "Debimetre") |> aggregateWindow(every: ' + req.params.time + 'm, fn: mean)'
         
         const result = await influxdb.query(
             { org: org },
