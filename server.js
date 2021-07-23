@@ -7,7 +7,7 @@ const app = express();
 require('./src/routes')(app);
 
 // Constants
-const HOST = process.env.HOST
+const HOST = process.env.HOST;
 const PORT = process.env.PORT;
 
 app.listen(PORT, HOST);

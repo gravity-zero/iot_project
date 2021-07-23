@@ -53,7 +53,7 @@ def run():
         client.disconnect()    
 
     contenance = 0
-    valve = 1
+    valve = 0
     debit = False
     launch = False
     alert = 0
@@ -61,6 +61,7 @@ def run():
 
       if contenance > 159840 : #On commence à envoyer du débit
         launch = True
+        valve = 1
 
       if launch : # Débit ON
         debit_val = randomize(DEBIT_MIN, DEBIT_MAX)
